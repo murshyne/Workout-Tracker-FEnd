@@ -1,0 +1,68 @@
+.dashboard {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.dashboard h2 {
+    margin-bottom: 20px;
+}
+
+.goals-section {
+    margin-bottom: 20px;
+}
+
+.goals-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.goals-section li {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.goals-section input {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 14px;
+    width: calc(100% - 22px);
+}
+
+.goals-section button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.goals-section button:hover {
+    background-color: #555;
+}
+
+.upload-section input {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.upload-section button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-section button:hover {
+    background-color: #555;
+}
