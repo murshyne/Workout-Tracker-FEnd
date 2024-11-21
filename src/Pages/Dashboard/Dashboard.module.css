@@ -1,68 +1,53 @@
+/* Dashboard.module.css */
+
 .dashboard {
-    max-width: 600px;
+    max-width: 900px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
-}
-
-.dashboard h2 {
-    margin-bottom: 20px;
-}
-
-.goals-section {
-    margin-bottom: 20px;
-}
-
-.goals-section ul {
+    background-color: #fff;
+  }
+  
+  .dashboard h2 {
+    margin-bottom: 30px;
+  }
+  
+  .goals-section, .exercise-section, .meal-plan-section, .upload-section {
+    margin-bottom: 30px;
+  }
+  
+  .goals-section ul, .exercise-section ul, .meal-plan-section ul {
     list-style: none;
     padding: 0;
-}
-
-.goals-section li {
-    margin: 5px 0;
+  }
+  
+  .goals-section li, .exercise-section li, .meal-plan-section li {
+    margin: 10px 0;
+  }
+  
+  .goals-section input, .upload-section input {
+    padding: 12px;
     font-size: 16px;
-}
-
-.goals-section input {
+    width: calc(100% - 22px); /* Ensures input fields stretch */
     margin-top: 10px;
-    padding: 10px;
-    font-size: 14px;
-    width: calc(100% - 22px);
-}
-
-.goals-section button {
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .goals-section button, .upload-section button {
+    padding: 12px;
+    font-size: 16px;
     background-color: #333;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.goals-section button:hover {
-    background-color: #555;
-}
-
-.upload-section input {
     margin-top: 10px;
-    padding: 10px;
-}
-
-.upload-section button {
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 14px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.upload-section button:hover {
+  }
+  
+  .goals-section button:hover, .upload-section button:hover {
     background-color: #555;
-}
+  }
+  

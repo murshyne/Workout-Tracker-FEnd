@@ -1,26 +1,55 @@
-// Home.jsx (Updated for layout)
-import React from "react";
-import './Home.module.css';
+import React, { Suspense, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+// Dynamically import Login and Signup components
+const Login = React.lazy(() => import('../Login/Login'));
+const Signup = React.lazy(() => import('../Signup/Signup'));
 
 const Home = () => {
+  const [formType, setFormType] = useState('login');  // Track which form to display
+
+  const handleToggleForm = (type) => {
+    setFormType(type);  // Switch between login and signup
+  };
+
   return (
     <div className="home-page">
       <div className="left-section">
-        <h1>Welcome to ReppUp</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras euismod euismod urna a interdum. Phasellus consectetur velit vel augue feugiat, et iaculis elit tincidunt.
-        </p>
+        <div className="welcome-message">
+          <h1>Welcome to ReppUp!</h1>
+          <p>Your path to success starts here</p>
+        </div>
       </div>
+      
       <div className="right-section">
-        <h2>Login</h2>
-        <form>
-          <label>Email: </label>
-          <input type="email" />
-          <label>Password: </label>
-          <input type="password" />
-          <button type="submit">Log In</button>
-        </form>
-        <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+        <div className="form-container">
+          <h2>{formType === 'login' ? 'Login to your account' : 'Create a new account'}</h2>
+          
+          {/* Suspense is used to handle dynamic import */}
+          <Suspense fallback={<div>Loading...</div>}>
+            {formType === 'login' ? (
+              <Login />
+            ) : (
+              <Signup />
+            )}
+          </Suspense>
+          
+          <div className="form-toggle">
+            <p>
+              {formType === 'login' ? (
+                <>
+                  Don't have an account? 
+                  <Link to="/signup" onClick={() => handleToggleForm('signup')}>Sign Up</Link>
+                </>
+              ) : (
+                <>
+                  Already have an account? 
+                  <Link to="/login" onClick={() => handleToggleForm('login')}>Login</Link>
+                </>
+              )}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

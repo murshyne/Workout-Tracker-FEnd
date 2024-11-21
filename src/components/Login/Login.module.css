@@ -1,41 +1,49 @@
+/* Login.module.css */
+
 .login-container {
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.login-container h2 {
+    background-color: #fff;
+  }
+  
+  .login-container h2 {
     text-align: center;
-}
-
-.login-container form {
+    margin-bottom: 20px;
+  }
+  
+  .login-container form {
     display: flex;
     flex-direction: column;
-}
-
-.login-container input {
-    margin-bottom: 10px;
+  }
+  
+  .login-container input {
+    margin-bottom: 15px; /* Increase spacing between input fields */
     padding: 10px;
     font-size: 16px;
-}
-
-.login-container button {
-    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .login-container button {
+    padding: 12px;
     font-size: 16px;
     background-color: #333;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.login-container button:hover {
+    margin-top: 10px;
+  }
+  
+  .login-container button:hover {
     background-color: #555;
-}
-
-.login-container p {
+  }
+  
+  .login-container p {
     text-align: center;
     margin-top: 10px;
-}
+  }
+  
