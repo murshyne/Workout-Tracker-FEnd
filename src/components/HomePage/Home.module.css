@@ -1,0 +1,15 @@
+/* Home.module.css */
+.home-page {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-section {
+  width: 65%; /* Takes up 2/3 of the screen */
+  padding: 20px;
+}
+
+.right-section {
+  width: 30%; /* Takes up 1/3 of the screen */
+  padding: 20px;
+}

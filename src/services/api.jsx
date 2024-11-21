@@ -1,14 +1,9 @@
 import axios from 'axios';
 
-// Axios instance for shared base configuration
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000',
-});
-
 // Signup function
 export const signup = async (formData) => {
   try {
-    const response = await axiosInstance.post('/auth/signup', formData);
+    const response = await axios.post('http://localhost:3000/auth/signup', formData);  // Directly use axios for the request
     return response.data;
   } catch (error) {
     // Forward error to caller for handling
@@ -19,13 +14,11 @@ export const signup = async (formData) => {
 // Login function
 export const login = async (formData) => {
   try {
-    const response = await axiosInstance.post('/auth/login', formData);
+    const response = await axios.post('http://localhost:3000/auth/login', formData);  // Directly use axios for the request
     return response.data;
   } catch (error) {
-    // Forward error to caller for handling
     throw error.response ? error.response.data : { error: 'Network Error' };
   }
 };
 
-// Export axiosInstance if needed elsewhere
-export default axiosInstance;
+export default axios; 

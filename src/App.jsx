@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
-import Home from './Pages/Home'; 
-import Signup from './Pages/Signup';
-import Login from './Pages/Login';
-import Dashboard from './Pages/Dashboard';
+import Home from './components/HomePage/Home'; 
+import Signup from './components/Signup/Signup';
+import Login from './components/Login/Login';
+import Dashboard from './Pages/Dashboard/Dashboard';
 
 const App = () => {
     return (
-        <Router>
+        <>
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />  {/* Home page route */}
@@ -16,7 +16,7 @@ const App = () => {
                 <Route path="/login" element={<Login />} />  {/* Login page route */}
                 <Route path="/dashboard" element={<Dashboard />} />  {/* Dashboard page route */}
             </Routes>
-        </Router>
+        </>
     );
 };
 

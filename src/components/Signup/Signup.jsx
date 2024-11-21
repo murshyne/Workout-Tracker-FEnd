@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../services/api';  // Assuming you have an API service for signup
+import { signup } from '../../services/api';  // Assuming you have an API service for signup
 import './Signup.module.css';  // Import your styles
 
 const SignUp = ({ setNewUser }) => {
     const nav = useNavigate();
   
     const [formData, setFormData] = useState({
-      fname: '',
-      lname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       password2: '',
@@ -52,20 +52,20 @@ const SignUp = ({ setNewUser }) => {
       <div className="forms">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit} autoComplete="off">
-          <label htmlFor="fname">First Name: </label>
+          <label htmlFor="firstName">First Name: </label>
           <input
             onChange={handleChange}
             type="text"
-            id="fname"
-            name="fname"
+            id="firstName"
+            name="firstName"
             placeholder="First Name"
           />
-          <label htmlFor="lname">Last Name: </label>
+          <label htmlFor="lastName">Last Name: </label>
           <input
             onChange={handleChange}
             type="text"
-            id="lname"
-            name="lname"
+            id="lastName"
+            name="lastName"
             placeholder="Last Name"
           />
           <label htmlFor="email">Email: </label>
