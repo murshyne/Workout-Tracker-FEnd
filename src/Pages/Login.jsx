@@ -14,7 +14,7 @@ const Login = ({ setNewUser }) => {
   
     // Handle new user registration flow
     const handleClick = () => {
-      nav('/auth/signup'); // Navigate to the sign-up page
+      nav('/signup'); // Navigate to the sign-up page
     };
   
     // Handle form input change
@@ -39,10 +39,9 @@ const Login = ({ setNewUser }) => {
       }
   
       try {
-        // Simulate login request, replace this with your actual API call
-        // await login(formData);
+
         setMessage('Login successful! Redirecting...');
-        nav('/dashboard');  // Redirect to dashboard on successful login
+        nav('/dashboard'); 
       } catch (err) {
         setErrors([err.response?.data || 'Invalid credentials.']);
         setTimeout(() => {
@@ -91,7 +90,7 @@ const Login = ({ setNewUser }) => {
   
             <p>
               Need a ReppUp account? <br />
-              <a href="#" onClick={handleClick}>Create an account</a>
+              <a href="#" onClick={() => nav('/signup')}>Create an account</a>
             </p>
           </form>
   

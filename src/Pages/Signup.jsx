@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../services/api';
-import './Signup.module.css';
-
+import { signup } from '../services/api';  // Assuming you have an API service for signup
+import './Signup.module.css';  // Import your styles
 
 const SignUp = ({ setNewUser }) => {
     const nav = useNavigate();
@@ -19,7 +18,7 @@ const SignUp = ({ setNewUser }) => {
     const [password2Visible, setPassword2Visible] = useState(false);
   
     const handleClick = () => {
-      nav('/auth/login');  // Navigate to the LoginForm route
+      nav('/login'); 
     };
   
     const handleChange = (e) => {
@@ -32,18 +31,23 @@ const SignUp = ({ setNewUser }) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       if (formData.password !== formData.password2) {
-        setErrors(["Passwords do not match"]);
+        setErrors([{ msg: "Passwords do not match" }]);
       } else {
         try {
-          // Directly call the signup API function
-          await signup(formData);
-          nav('/dashboard');
+          await signup(formData); 
+          // Navigate to dashboard after successful signup
+          nav('/dashboard'); 
         } catch (err) {
-          setErrors(err.response?.data?.errors || ['An error occurred']);
+          // Check if the error response contains a message
+          if (err.response && err.response.data.errors) {
+            setErrors(err.response.data.errors);
+          } else {
+            setErrors([{ msg: 'An unexpected error occurred.' }]);
+          }
         }
       }
     };
-  
+
     return (
       <div className="forms">
         <h2>Sign Up</h2>
@@ -98,7 +102,7 @@ const SignUp = ({ setNewUser }) => {
             <input
               onChange={handleChange}
               type={password2Visible ? "text" : "password"}
-              id="password2"
+              id="password2" 
               name="password2"
               placeholder="Confirm Password"
               minLength="8"
@@ -113,12 +117,23 @@ const SignUp = ({ setNewUser }) => {
   
           <button type="submit">Sign Up</button>
         </form>
+        
         <p>
-          Already have an account? <button onClick={handleClick}>Log In</button>
+          Already have an account? 
+          <button onClick={handleClick} className="link-button">
+            Log In
+          </button>
         </p>
-        {errors.length > 0 && <div className="error-message">{errors}</div>}
+        
+        {errors.length > 0 && (
+          <div className="error-message">
+            {errors.map((error, index) => (
+              <p key={index}>{error.msg}</p>
+            ))}
+          </div>
+        )}
       </div>
     );
-  };
-  
-  export default SignUp;
+};
+
+export default SignUp;

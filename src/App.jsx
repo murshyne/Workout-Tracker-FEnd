@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Home from './Pages/Home'; 
 import Signup from './Pages/Signup';
@@ -12,11 +11,10 @@ const App = () => {
         <Router>
             <Navbar />
             <Routes>
-            <Route path="/" element={<Home />} />
-                <Route path="/" element={<h1>Welcome to Reppup!</h1>} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/" element={<Home />} />  {/* Home page route */}
+                <Route path="/signup" element={<Signup />} />  {/* Signup page route */}
+                <Route path="/login" element={<Login />} />  {/* Login page route */}
+                <Route path="/dashboard" element={<Dashboard />} />  {/* Dashboard page route */}
             </Routes>
         </Router>
     );
