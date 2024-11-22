@@ -14,7 +14,15 @@ export const signup = async (formData) => {
 // Login function
 export const login = async (formData) => {
   try {
-    const response = await axios.post('http://localhost:3000/auth/login', formData);  // Directly use axios for the request
+    const response = await axios.post(
+      'http://localhost:3000/auth/login',
+      formData, // Send formData as the body
+      {
+        headers: {
+          'Content-Type': 'application/json', // Explicitly set the content type to JSON
+        }
+      }
+    );
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : { error: 'Network Error' };

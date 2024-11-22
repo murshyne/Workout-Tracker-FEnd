@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../../services/api';  // Assuming you have an API service for signup
-import './Signup.module.css';  // Import your styles
+import { signup } from '../../services/api'; 
+import './Signup.module.css'; 
 
 const SignUp = ({ setNewUser }) => {
     const nav = useNavigate();
