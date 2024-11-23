@@ -59,7 +59,7 @@ const Login = ({ setNewUser }) => {
       console.log(err);
       
       // Handle errors from the backend (e.g., network issues)
-      setErrors([err.response?.data || 'An error occurred. Please try again.']);
+      setErrors([err.response?.data || 'Invalid credentials. Please try again.']);
     }
 
     // Clear errors after 3 seconds

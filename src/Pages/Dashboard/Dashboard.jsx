@@ -12,51 +12,47 @@ const Dashboard = () => {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [exerciseRecommendations, setExerciseRecommendations] = useState([]);
   const [mealPlan, setMealPlan] = useState([]);
+  const [mealQuery, setMealQuery] = useState('');
   const [cookies] = useCookies(['authToken']);
 
-  // API Keys and URLs
-  const SPOONACULAR_API_KEY = '5510681e62db4ee6a3f347ebe787fa47';  // Replace with your Spoonacular API key
-  const WGER_API_URL = 'https://wger.de/api/v2/exercise/';  // Wger API URL for exercises
+  const EXERCISEDB_API_URL = 'https://exercisedb.p.rapidapi.com/exercises/bodyPart/all';
+  const EXERCISEDB_API_HEADERS = {
+    'X-RapidAPI-Key': import.meta.env.VITE_EXERCISEDB_API_KEY,
+    'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+  };
+  
 
-  // Fetch Exercise Recommendations from Wger API
+  const SPOONACULAR_API_URL = 'https://api.spoonacular.com/recipes/complexSearch'; 
+  const SPOONACULAR_API_KEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
+
+  // Fetch Exercise Recommendations
   const fetchExerciseRecommendations = async () => {
     try {
-      const response = await axios.get(WGER_API_URL, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      setExerciseRecommendations(response.data.results);  // Store exercise recommendations
-      console.log('Exercise Recommendations:', response.data.results);
+      const response = await axios.get(EXERCISEDB_API_URL, { headers: EXERCISEDB_API_HEADERS });
+      setExerciseRecommendations(response.data.slice(0, 10)); // Limit to 10 exercises
     } catch (err) {
       console.error('Error fetching exercises:', err);
     }
   };
 
-  // Fetch Meal Plan from Spoonacular API
-  const fetchMealPlan = async () => {
+  // Fetch Meal Plan based on query
+  const fetchMealPlan = async (query = '') => {
+    if (!query) {
+      return;
+    }
     try {
-      const response = await axios.get('https://api.spoonacular.com/mealplanner/generate', {
+      const response = await axios.get(SPOONACULAR_API_URL, {
         params: {
           apiKey: SPOONACULAR_API_KEY,
-          timeFrame: 'day',  // Can use 'day' or 'week'
-          targetCalories: 2000,  // Optional: Set calorie target
+          query: query, 
+          number: 3, // Limit results to 3 for simplicity
         },
       });
-      setMealPlan(response.data.meals);  // Store meal plan
-      console.log('Meal Plan:', response.data.meals);
+      setMealPlan(response.data.results); // Save the meal plan response
     } catch (err) {
       console.error('Error fetching meal plan:', err);
     }
   };
-
-  // Fetch Data on Component Mount
-  useEffect(() => {
-    if (cookies.authToken) {
-      fetchExerciseRecommendations();
-      fetchMealPlan();
-    }
-  }, [cookies.authToken]);  // Only re-fetch when authToken changes
 
   // Add a new fitness goal
   const addGoal = () => {
@@ -66,12 +62,24 @@ const Dashboard = () => {
     }
   };
 
-  // Handle file upload input
+  // Handle search on Enter key press
+  const handleSearch = (e) => {
+    if (e.key === 'Enter') {
+      fetchMealPlan(mealQuery); // Trigger meal plan fetch based on the search query
+    }
+  };
+
+  // Handle search on button click
+  const handleSearchClick = () => {
+    fetchMealPlan(mealQuery); // Trigger meal plan fetch based on the search query
+  };
+
+  // Handle file upload
   const handleFileUpload = (e) => {
     setUploadedFile(e.target.files[0]);
   };
 
-  // Submit the file to the server with the JWT token for authentication
+  // Submit file to server
   const submitFile = async () => {
     if (uploadedFile) {
       const formData = new FormData();
@@ -84,7 +92,7 @@ const Dashboard = () => {
           },
         });
         alert('File uploaded successfully!');
-        setUploadedFile(null); // Reset file after upload
+        setUploadedFile(null); // Reset file input
       } catch (err) {
         console.error('Error uploading file:', err);
         alert('Error uploading file. Please try again.');
@@ -92,39 +100,72 @@ const Dashboard = () => {
     }
   };
 
+  // Fetch data on component mount
+  useEffect(() => {
+    if (cookies.authToken) {
+      fetchMealPlan(mealQuery); // Fetch meal plan when logged in
+      fetchExerciseRecommendations(); // Fetch exercise recommendations on load
+    }
+  }, [cookies.authToken]);
+
   return (
     <div className="dashboard">
       <h2>Welcome to Your Dashboard</h2>
 
-      {/* Display Exercise Recommendations */}
+      {/* Exercise Recommendations */}
       <div className="exercise-section">
         <h3>Exercise Recommendations</h3>
         <ul>
-          {exerciseRecommendations.length > 0 ? (
+          {exerciseRecommendations.length ? (
             exerciseRecommendations.map((exercise, index) => (
               <li key={index}>{exercise.name}</li>
             ))
           ) : (
-            <p>No exercise recommendations available.</p>
+            <p>No recommendations available.</p>
           )}
         </ul>
+      </div>
+
+      {/* Meal Search Section */}
+      <div className="meal-search-section">
+        <h3>Search for Meals</h3>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <input
+            type="text"
+            placeholder="Enter meal: e.g., Chicken"
+            value={mealQuery}
+            onChange={(e) => setMealQuery(e.target.value)} 
+            onKeyDown={handleSearch} 
+            style={{ marginRight: '10px' }}
+          />
+          <button onClick={handleSearchClick}>Search</button>
+        </div>
       </div>
 
       {/* Display Meal Plan */}
       <div className="meal-plan-section">
-        <h3>Your Meal Plan</h3>
-        <ul>
-          {mealPlan.length > 0 ? (
-            mealPlan.map((meal, index) => (
-              <li key={index}>{meal.title}</li>
-            ))
-          ) : (
-            <p>No meal plan available.</p>
-          )}
-        </ul>
+        <h3>Meal Plan</h3>
+        {mealPlan.length ? (
+          <div>
+            {mealPlan.map((meal, index) => (
+              <div key={index}>
+                <h4>{meal.title}</h4>
+                <a
+                  href={`https://www.google.com/search?q=${encodeURIComponent(meal.title + " recipe")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Recipe
+                </a>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No meal plan available. Try again later!</p>
+        )}
       </div>
 
-      {/* Display Fitness Goals */}
+      {/* Fitness Goals */}
       <div className="goals-section">
         <h3>Your Fitness Goals</h3>
         <ul>
@@ -141,7 +182,7 @@ const Dashboard = () => {
         <button onClick={addGoal}>Add Goal</button>
       </div>
 
-      {/* File Upload Section */}
+      {/* File Upload */}
       <div className="upload-section">
         <h3>Upload Your Progress</h3>
         <input type="file" onChange={handleFileUpload} />
