@@ -23,7 +23,7 @@ const Home = () => {
       
       <div className="right-section">
         <div className="form-container">
-          <h2>{formType === 'login' ? 'Login to your account' : 'Create a new account'}</h2>
+          {/* <h2>{formType === 'login' ? 'Login to your account' : 'Create a new account'}</h2> */}
           
           {/* Suspense is used to handle dynamic import */}
           <Suspense fallback={<div>Loading...</div>}>
@@ -38,8 +38,8 @@ const Home = () => {
             <p>
               {formType === 'login' ? (
                 <>
-                  Don't have an account? 
-                  <Link to="/signup" onClick={() => handleToggleForm('signup')}>Sign Up</Link>
+                  
+                 
                 </>
               ) : (
                 <>

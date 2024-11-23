@@ -1,14 +1,17 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import './Dashboard.module.css';
 import { useCookies } from 'react-cookie';
-import Exercises from './Exercises'; 
-import Meals from './Meals'; 
+import Exercises from './Exercises';  // Import Exercises component
+import Meals from './Meals';  // Import Meals component
 
 const Dashboard = () => {
-  const [goals, setGoals] = useState([{ id: 1, text: 'Run 5 miles this week' }, { id: 2, text: 'Workout 4 times this week' }]);
+  const [goals, setGoals] = useState([ ]);
   const [newGoal, setNewGoal] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [cookies] = useCookies(['authToken']);
+  const [cookies] = useCookies(['authToken', 'firstName']); // Assuming userName is stored in cookies
+
+  // Assuming the user's name is saved in a cookie named 'userName'
+  const userFirstName = cookies.firstName || 'Hey'; // Default to 'User' if name is not in cookies
 
   const addGoal = () => {
     if (newGoal.trim()) {
@@ -38,7 +41,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h2>Welcome to Your Dashboard</h2>
+      <h2>{userFirstName}!, Welcome To Your Dashboard</h2> {/* Display dynamic username */}
 
       {/* Goals Section */}
       <div className="goals-section">
@@ -48,7 +51,7 @@ const Dashboard = () => {
         </ul>
         <input
           type="text"
-          placeholder="Add a new goal"
+          placeholder="e.g., Run 5 miles this week"
           value={newGoal}
           onChange={(e) => setNewGoal(e.target.value)}
         />

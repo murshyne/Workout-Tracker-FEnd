@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../services/api'; 
-import { useCookies } from 'react-cookie'; 
+import { useCookies } from 'react-cookie';
+import { login } from '../../services/api';  // Assuming this is your login API service
 import './index.module.css';
 
 const Login = ({ setNewUser }) => {
-  const nav = useNavigate();  // Hook to navigate
+  const nav = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [errors, setErrors] = useState([]);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [cookies, setCookie] = useCookies(['authToken']);
-
-  // Handle new user registration flow
-  const handleClick = () => {
-    nav('/signup'); // Navigate to the sign-up page
-  };
+  const [cookies, setCookie] = useCookies(['authToken', 'firstName']);  // Store token and firstName in cookies
 
   // Handle form input change
   const handleChange = (e) => {
@@ -42,12 +37,15 @@ const Login = ({ setNewUser }) => {
 
     try {
       // Call the login function from your services/api.js
-      const response = await login(formData);
-      
-      // If login is successful, store the token in cookies
+      const response = await login(formData);  // This should return both token and firstName
+
+      // If login is successful, store both token and firstName in cookies
       if (response.token) {
-        setCookie('authToken', response.token, { path: '/'});  // Set token in cookie for 7 days
-        
+        //Security: Storing sensitive data like authToken in cookies is common, but ensure the cookies are marked as "HttpOnly" and "Secure" (if using HTTPS) for enhanced security in production. 
+        setCookie('authToken', response.token, { path: '/', secure: true, httpOnly: true });
+  // Store token in cookie
+        setCookie('firstName', response.firstName, { path: '/' });  // Store firstName in cookie
+
         // Redirect to the dashboard
         nav('/dashboard');
       } else {
@@ -71,8 +69,7 @@ const Login = ({ setNewUser }) => {
   return (
     <div className="login-page">
       <div className="forms">
-        <h2>Welcome back to ReppUp</h2>
-        <h3>Login</h3>
+        <h3>Login to your account</h3>
 
         <form onSubmit={handleSubmit} autoComplete="off">
           <label htmlFor="email">Email: </label>
