@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../services/api'; 
 import { useCookies } from 'react-cookie'; 
-import './Login.module.css';
+import './index.module.css';
 
 const Login = ({ setNewUser }) => {
   const nav = useNavigate();  // Hook to navigate
@@ -46,7 +46,7 @@ const Login = ({ setNewUser }) => {
       
       // If login is successful, store the token in cookies
       if (response.token) {
-        setCookie('authToken', response.token, { path: '/', expires: 7 });  // Set token in cookie for 7 days
+        setCookie('authToken', response.token, { path: '/'});  // Set token in cookie for 7 days
         
         // Redirect to the dashboard
         nav('/dashboard');
@@ -56,6 +56,8 @@ const Login = ({ setNewUser }) => {
       }
 
     } catch (err) {
+      console.log(err);
+      
       // Handle errors from the backend (e.g., network issues)
       setErrors([err.response?.data || 'An error occurred. Please try again.']);
     }

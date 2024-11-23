@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Dashboard.module.css';
-import { useCookies } from 'react-cookie'; 
-import axios from 'axios'; 
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 const Dashboard = () => {
   const [goals, setGoals] = useState([
@@ -12,45 +12,51 @@ const Dashboard = () => {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [exerciseRecommendations, setExerciseRecommendations] = useState([]);
   const [mealPlan, setMealPlan] = useState([]);
-  const [cookies] = useCookies(['authToken']); 
+  const [cookies] = useCookies(['authToken']);
 
-  // Fetch exercise recommendations from the API
+  // API Keys and URLs
+  const SPOONACULAR_API_KEY = '5510681e62db4ee6a3f347ebe787fa47';  // Replace with your Spoonacular API key
+  const WGER_API_URL = 'https://wger.de/api/v2/exercise/';  // Wger API URL for exercises
+
+  // Fetch Exercise Recommendations from Wger API
   const fetchExerciseRecommendations = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/workouts', {
+      const response = await axios.get(WGER_API_URL, {
         headers: {
-          Authorization: `Bearer ${cookies.authToken}`,
+          'Content-Type': 'application/json',
         },
       });
-      setExerciseRecommendations(response.data);  // Store the recommendations
-      console.log('Recommended workouts:', response.data);
+      setExerciseRecommendations(response.data.results);  // Store exercise recommendations
+      console.log('Exercise Recommendations:', response.data.results);
     } catch (err) {
-      console.error('Error fetching workouts:', err);
+      console.error('Error fetching exercises:', err);
     }
   };
 
-  // Fetch meal plan from the API
+  // Fetch Meal Plan from Spoonacular API
   const fetchMealPlan = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/meal-plan', {
-        headers: {
-          Authorization: `Bearer ${cookies.authToken}`,
+      const response = await axios.get('https://api.spoonacular.com/mealplanner/generate', {
+        params: {
+          apiKey: SPOONACULAR_API_KEY,
+          timeFrame: 'day',  // Can use 'day' or 'week'
+          targetCalories: 2000,  // Optional: Set calorie target
         },
       });
-      setMealPlan(response.data);  // Store the meal plan
-      console.log('Meal plan:', response.data);
+      setMealPlan(response.data.meals);  // Store meal plan
+      console.log('Meal Plan:', response.data.meals);
     } catch (err) {
       console.error('Error fetching meal plan:', err);
     }
   };
 
-  // Fetch data when component mounts
+  // Fetch Data on Component Mount
   useEffect(() => {
     if (cookies.authToken) {
       fetchExerciseRecommendations();
       fetchMealPlan();
     }
-  }, [cookies.authToken]);  // Only re-run when authToken changes
+  }, [cookies.authToken]);  // Only re-fetch when authToken changes
 
   // Add a new fitness goal
   const addGoal = () => {
@@ -72,14 +78,13 @@ const Dashboard = () => {
       formData.append('file', uploadedFile);
 
       try {
-        // Send a POST request to your backend with the JWT token in the header
         await axios.post('http://localhost:3000/api/uploads', formData, {
           headers: {
             Authorization: `Bearer ${cookies.authToken}`,
           },
         });
         alert('File uploaded successfully!');
-        setUploadedFile(null);  // Reset file after successful upload
+        setUploadedFile(null); // Reset file after upload
       } catch (err) {
         console.error('Error uploading file:', err);
         alert('Error uploading file. Please try again.');
@@ -111,7 +116,7 @@ const Dashboard = () => {
         <ul>
           {mealPlan.length > 0 ? (
             mealPlan.map((meal, index) => (
-              <li key={index}>{meal.name}</li>
+              <li key={index}>{meal.title}</li>
             ))
           ) : (
             <p>No meal plan available.</p>
