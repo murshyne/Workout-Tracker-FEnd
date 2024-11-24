@@ -1,4 +1,3 @@
-// Meals.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -37,11 +36,16 @@ const Meals = () => {
       </div>
 
       <div>
-        {/* <h3>Meal Plan</h3> */}
         {mealPlan.length ? (
           mealPlan.map((meal, index) => (
-            <div key={index}>
+            <div key={index} className="meal-item">
               <h4>{meal.title}</h4>
+              <div>
+                {/* Displaying meal image */}
+                {meal.image && (
+                  <img src={meal.image} alt={meal.title} width="200" height="200" />
+                )}
+              </div>
               <a href={`https://www.google.com/search?q=${encodeURIComponent(meal.title)} recipe`} target="_blank" rel="noopener noreferrer">
                 View Recipe
               </a>
