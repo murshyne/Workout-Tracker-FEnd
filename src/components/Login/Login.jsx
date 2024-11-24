@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { login } from '../../services/api';  // Assuming this is your login API service
+import { login } from '../../services/api';
 import './index.module.css';
 
 const Login = ({ setNewUser }) => {
@@ -12,6 +12,7 @@ const Login = ({ setNewUser }) => {
   });
   const [errors, setErrors] = useState([]);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordLength, setPasswordLength] = useState(0);  // Track password length
   const [cookies, setCookie] = useCookies(['authToken', 'firstName']);  // Store token and firstName in cookies
 
   // Handle form input change
@@ -20,6 +21,11 @@ const Login = ({ setNewUser }) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+
+    // Update password length on change
+    if (e.target.name === 'password') {
+      setPasswordLength(e.target.value.length);
+    }
   };
 
   // Toggle password visibility
@@ -43,24 +49,19 @@ const Login = ({ setNewUser }) => {
       if (response.token) {
         //Security: Storing sensitive data like authToken in cookies is common, but ensure the cookies are marked as "HttpOnly" and "Secure" (if using HTTPS) for enhanced security in production. 
         setCookie('authToken', response.token, { path: '/', secure: true, httpOnly: true });
-  // Store token in cookie
-        setCookie('firstName', response.firstName, { path: '/' });  // Store firstName in cookie
+        setCookie('firstName', response.firstName, { path: '/' });
 
         // Redirect to the dashboard
         nav('/dashboard');
       } else {
-        // Handle failed login (e.g., invalid credentials)
         setErrors(["Invalid credentials."]);
       }
 
     } catch (err) {
       console.log(err);
-      
-      // Handle errors from the backend (e.g., network issues)
       setErrors([err.response?.data || 'Invalid credentials. Please try again.']);
     }
 
-    // Clear errors after 3 seconds
     setTimeout(() => {
       setErrors([]);
     }, 3000);
@@ -96,9 +97,15 @@ const Login = ({ setNewUser }) => {
               value={formData.password}
               onClick={() => {
                 setPasswordVisible(true);
-                setTimeout(() => setPasswordVisible(false), 1000); // Reveal and hide after 1 second
+                setTimeout(() => setPasswordVisible(false), 1500); // Reveal and hide after 1.5 second
               }}
             />
+            {/* Information bubble */}
+            {passwordLength >= 2 && (
+              <div className="info-bubble">
+                Click on the password field to reveal your password.
+              </div>
+            )}
           </div>
 
           <button type="submit">Log In</button>
