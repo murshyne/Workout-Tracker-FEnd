@@ -1,60 +1,147 @@
-/* Signup.module.css */
-
-.signup-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.signup-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f8f8;
+  color: black;
+  height:auto;
 }
 
-.signup-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Adds consistent space between form elements */
+html, body {
+  
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.signup-container input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Form container */
+.forms {
+  width: 100%;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.signup-container button {
-    padding: 12px;
-    font-size: 16px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
+/* Header styling */
+h2 {
+  font-size: 30px;
+  font-weight: 700;
+  color: black; /* Header text color set to black */
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.signup-container button:hover {
-    background-color: #555;
+/* Input fields */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px 0;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: black; /* Text color inside input fields set to black */
+  transition: border-color 0.3s;
 }
 
-.signup-container p {
-    text-align: center;
-    margin-top: 10px;
+/* Focus effect */
+input:focus, select:focus {
+  border-color: #4c8bf5;
+  outline: none;
 }
 
+/* Password visibility container */
+.password-container {
+  position: relative;
+}
+
+/* Password input styling */
+.password-input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0 20px 0;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: black; /* Text color inside password input fields set to black */
+}
+
+.password-input:focus {
+  border-color: #4c8bf5;
+  outline: none;
+}
+
+.password-container input[type="password"] {
+  padding-right: 30px;
+}
+
+.password-container .eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  background-color: #4c8bf5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #357ae8;
+}
+
+/* Link styling */
+.link-button {
+  color: #4c8bf5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+/* Error message */
 .error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 15px;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 20px;
 }
 
 .error-message p {
-    margin: 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Spacing and layout for smaller screens */
+@media (max-width: 600px) {
+  .forms {
+    padding: 15px;
+  }
+  h2 {
+    font-size: 24px;
+  }
 }

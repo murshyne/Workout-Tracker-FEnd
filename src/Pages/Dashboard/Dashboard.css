@@ -1,0 +1,136 @@
+/* Dashboard Styling */
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f9;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h2 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+/* Section Styling */
+.section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Goals Section */
+.goals-section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.goals-section li {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.goals-section input {
+  padding: 12px;
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.goals-section input:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.goals-section button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.goals-section button:hover {
+  background-color: #45a049;
+}
+
+/* Meals & Exercise Section */
+.meals-section, .exercises-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* File Upload Section */
+.upload-section input[type="file"] {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.upload-section button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-section button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 10px;
+  }
+
+  .section {
+    padding: 15px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 24px;
+  }
+
+  .goals-section input, .upload-section input[type="file"] {
+    width: 100%;
+  }
+
+  .goals-section button, .upload-section button {
+    width: 100%;
+  }
+}

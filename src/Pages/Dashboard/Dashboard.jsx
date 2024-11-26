@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import './Dashboard.module.css';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom'; // Updated import to useNavigate
+import './Dashboard.css';
 import Exercises from './Exercises';  // Import Exercises component
 import Meals from './Meals';  // Import Meals component
+import axios from 'axios';  // Make sure to import axios for file upload
 
 const Dashboard = () => {
-  const [goals, setGoals] = useState([ ]);
+  const [goals, setGoals] = useState([]);
   const [newGoal, setNewGoal] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [cookies] = useCookies(['authToken', 'firstName']); // Assuming userName is stored in cookies
+  const [cookies, removeCookie] = useCookies(['authToken', 'firstName']); // Assuming userName is stored in cookies
+  const navigate = useNavigate(); // Hook to navigate
 
-  // Assuming the user's name is saved in a cookie named 'userName'
   const userFirstName = cookies.firstName || 'Hey'; // Default to 'User' if name is not in cookies
 
   const addGoal = () => {
@@ -39,36 +41,52 @@ const Dashboard = () => {
     }
   };
 
+  const handleLogout = () => {
+    removeCookie('authToken');
+    removeCookie('firstName');
+    navigate('/login'); // Use navigate instead of history.push
+  };
+
   return (
     <div className="dashboard">
-      <h2>{userFirstName}!, Welcome To Your Dashboard</h2> {/* Display dynamic username */}
+      {/* Navbar */}
 
-      {/* Goals Section */}
-      <div className="goals-section">
-        <h3>Your Fitness Goals</h3>
-        <ul>
-          {goals.map((goal) => <li key={goal.id}>{goal.text}</li>)}
-        </ul>
-        <input
-          type="text"
-          placeholder="e.g., Run 5 miles this week"
-          value={newGoal}
-          onChange={(e) => setNewGoal(e.target.value)}
-        />
-        <button onClick={addGoal}>Add Goal</button>
+
+      <div className="dashboard-header">
+        <h2>{userFirstName}!, Welcome To Your Dashboard</h2>
       </div>
+      <div className="navbar">
+        <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+      </div>
+      <div className="dashboard-content">
+        {/* Goals Section */}
+        <div className="section goals-section">
+          <h3>Your Fitness Goals</h3>
+          <ul>
+            {goals.map((goal) => (
+              <li key={goal.id}>{goal.text}</li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            placeholder="e.g., Run 5 miles this week"
+            value={newGoal}
+            onChange={(e) => setNewGoal(e.target.value)}
+          />
+          <button onClick={addGoal}>Add Goal</button>
+        </div>
 
-      {/* Meal Section */}
-      <Meals />  {/* Render Meals component */}
+        {/* Meals Section */}
+        <div className="section meals-section">
+          <Meals />  {/* Render Meals component */}
+        </div>
 
-      {/* Exercise Section */}
-      <Exercises />  {/* Render Exercises component */}
+        {/* Exercises Section */}
+        <div className="section exercises-section">
+          <Exercises />  {/* Render Exercises component */}
+        </div>
 
-      {/* File Upload */}
-      <div className="upload-section">
-        <h3>Upload Your Progress</h3>
-        <input type="file" onChange={handleFileUpload} />
-        <button onClick={submitFile}>Upload</button>
+       
       </div>
     </div>
   );

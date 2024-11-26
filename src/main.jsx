@@ -8,7 +8,10 @@ import './index.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AppProvider>
-      <Router>
+    <Router future={{ 
+        v7_startTransition: true, 
+        v7_relativeSplatPath: true 
+      }}>
         <App />
       </Router>
     </AppProvider>
