@@ -1,6 +1,6 @@
 import { useState, useReducer } from "react";
 import GoalList from ".GoalList";
-import "./App.css";
+import "./Goal.css";
 
 
 // Initial state for the goal list

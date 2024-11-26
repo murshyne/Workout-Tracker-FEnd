@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Meals.css';
 
 const Meals = () => {
   const [mealPlan, setMealPlan] = useState([]);
@@ -43,7 +44,7 @@ const Meals = () => {
               <div>
                 {/* Displaying meal image */}
                 {meal.image && (
-                  <img src={meal.image} alt={meal.title} width="200" height="200" />
+                  <img src={meal.image} alt={meal.title} width="400" height="400" />
                 )}
               </div>
               <a href={`https://www.google.com/search?q=${encodeURIComponent(meal.title)} recipe`} target="_blank" rel="noopener noreferrer">

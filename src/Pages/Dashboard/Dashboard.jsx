@@ -10,10 +10,13 @@ const Dashboard = () => {
   const [goals, setGoals] = useState([]);
   const [newGoal, setNewGoal] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [cookies, removeCookie] = useCookies(['authToken', 'firstName']); // Assuming userName is stored in cookies
+  const [cookies, removeCookie] = useCookies(['authToken', 'firstName']);
+
+  console.log(cookies);
+
   const navigate = useNavigate(); // Hook to navigate
 
-  const userFirstName = cookies.firstName || 'Hey'; // Default to 'User' if name is not in cookies
+  const userFirstName = cookies.firstName === "undefined" ? 'Hey' : cookies.firstName // Default to 'User' if name is not in cookies
 
   const addGoal = () => {
     if (newGoal.trim()) {
@@ -47,16 +50,36 @@ const Dashboard = () => {
     navigate('/login'); // Use navigate instead of history.push
   };
 
+  // Function to handle deleting the user profile
+  const handleDeleteProfile = async () => {
+    const userConfirmed = window.confirm('Are you sure you want to delete your profile? This action cannot be undone.');
+    if (userConfirmed) {
+      try {
+        await axios.delete('http://localhost:3000/api/users/delete', {
+          headers: { Authorization: `Bearer ${cookies.authToken}` },
+        });
+        alert('Your profile has been deleted.');
+        removeCookie('authToken');
+        removeCookie('firstName');
+        navigate('/login'); // Redirect to login page after deletion
+      } catch (err) {
+        console.error('Error deleting profile:', err);
+        alert('Error deleting profile. Please try again later.');
+      }
+    }
+  };
+
+
+  
   return (
     <div className="dashboard">
       {/* Navbar */}
-
-
       <div className="dashboard-header">
-        <h2>{userFirstName}!, Welcome To Your Dashboard</h2>
+        <h2>{userFirstName}! Welcome To Your Dashboard</h2>
       </div>
       <div className="navbar">
         <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+       
       </div>
       <div className="dashboard-content">
         {/* Goals Section */}
@@ -85,8 +108,6 @@ const Dashboard = () => {
         <div className="section exercises-section">
           <Exercises />  {/* Render Exercises component */}
         </div>
-
-       
       </div>
     </div>
   );

@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Exercise.css';
 
 const Exercises = () => {
   const [exerciseRecommendations, setExerciseRecommendations] = useState([]);
   const [selectedExerciseGif, setSelectedExerciseGif] = useState('');
   const [selectedBodyPart, setSelectedBodyPart] = useState('');
-  const [selectedEquipment, setSelectedEquipment] = useState('');
-  const [selectedTarget, setSelectedTarget] = useState('');
-  const [selectedDifficulty, setSelectedDifficulty] = useState('');
 
   const bodyParts = ['chest', 'back', 'lower legs', 'upper legs', 'lower arms', 'upper arms', 'shoulders', 'neck', 'waist', 'core', 'cardio'];
-  const equipment = ["assisted", "band", "barbell", "body weight", "bosu ball", "cable", "dumbbell", "elliptical machine", "ez barbell", "hammer"];
-  const targets = ["abductors", "abs", "adductors", "biceps", "calves", "cardiovascular system", "delts", "forearms", "glutes"];
-  const difficulties = ["easy", "medium", "hard"]; // Difficulty levels
 
   // Function to fetch exercises based on selected filters
   const fetchExerciseRecommendations = async () => {
-    const params = {};
+    const params = {} ;
     if (selectedBodyPart) params.bodyPart = selectedBodyPart;
-    if (selectedEquipment) params.equipment = selectedEquipment;
-    if (selectedTarget) params.target = selectedTarget;
-    if (selectedDifficulty) params.difficulty = selectedDifficulty; // Include difficulty in the filters
 
     try {
       const response = await axios.get('https://exercisedb.p.rapidapi.com/exercises', {
@@ -41,53 +33,34 @@ const Exercises = () => {
 
   return (
     <div className="exercise-section">
-      <h3>Exercise Recommendations</h3>
+      <h3 className="exercise-title">Exercise Recommendations</h3>
 
       {/* Dropdowns for filters */}
-      <div>
-        <label>Select Body Part:</label>
-        <select onChange={(e) => setSelectedBodyPart(e.target.value)} value={selectedBodyPart}>
+      <div className="filter-container">
+        <label htmlFor="bodyPartSelect">Select Body Part:</label>
+        <select 
+          id="bodyPartSelect"
+          onChange={(e) => setSelectedBodyPart(e.target.value)} 
+          value={selectedBodyPart}
+          className="dropdown"
+        >
           <option value="">-- Select Body Part --</option>
           {bodyParts.map((part, index) => <option key={index} value={part}>{part}</option>)}
         </select>
       </div>
 
-      <div>
-        <label>Select Equipment:</label>
-        <select onChange={(e) => setSelectedEquipment(e.target.value)} value={selectedEquipment}>
-          <option value="">-- Select Equipment --</option>
-          {equipment.map((eq, index) => <option key={index} value={eq}>{eq}</option>)}
-        </select>
-      </div>
-
-      <div>
-        <label>Select Target:</label>
-        <select onChange={(e) => setSelectedTarget(e.target.value)} value={selectedTarget}>
-          <option value="">-- Select Target --</option>
-          {targets.map((target, index) => <option key={index} value={target}>{target}</option>)}
-        </select>
-      </div>
-
-      <div>
-        <label>Select Difficulty:</label>
-        <select onChange={(e) => setSelectedDifficulty(e.target.value)} value={selectedDifficulty}>
-          <option value="">-- Select Difficulty --</option>
-          {difficulties.map((level, index) => <option key={index} value={level}>{level}</option>)}
-        </select>
-      </div>
-
       {/* Go Button */}
-      <button onClick={handleSortApply}>Go</button>
+      <button className="go-button" onClick={handleSortApply}>Go</button>
 
       {/* Exercise Recommendations List */}
-      <ul>
+      <ul className="exercise-list">
         {exerciseRecommendations.length ? (
           exerciseRecommendations.map((exercise, index) => (
             <li key={index} className="exercise-item">
               <h4>{exercise.name}</h4>
               {/* Check if an image URL exists, and use it for the exercise */}
               {exercise.image_url && (
-                <div>
+                <div className="exercise-image">
                   <img 
                     src={`https://exercisedb-api.vercel.app/api/v1/images/${exercise.image_url}`} 
                     alt={exercise.name} 
@@ -96,9 +69,7 @@ const Exercises = () => {
                   />
                 </div>
               )}
-              <p><strong>Target: </strong>{exercise.target}</p>
-              <p><strong>Body Part: </strong>{exercise.bodyPart}</p>
-              <a href="#!" onClick={() => setSelectedExerciseGif(exercise.gifUrl)}>View Exercise Animation</a>
+              <a href="#!" onClick={() => setSelectedExerciseGif(exercise.gifUrl)} className="exercise-link">View Exercise Animation</a>
             </li>
           ))
         ) : (
@@ -108,9 +79,16 @@ const Exercises = () => {
 
       {/* Display selected GIF */}
       {selectedExerciseGif && (
-        <div>
+        <div className="exercise-gif">
           <h4>How to Do This Exercise:</h4>
-          <iframe src={selectedExerciseGif} width="400" height="300" title="Exercise GIF" frameBorder="0" allowFullScreen></iframe>
+          <iframe 
+            src={selectedExerciseGif} 
+            width="500" 
+            height="500" 
+            title="Exercise GIF" 
+            frameBorder="0" 
+            allowFullScreen
+          ></iframe>
         </div>
       )}
     </div>

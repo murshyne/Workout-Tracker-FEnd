@@ -1,0 +1,116 @@
+/* Main container styles */
+.exercise-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+  }
+  
+  /* Title */
+  .exercise-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Filter container styles */
+  .filter-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  .dropdown {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  /* Go Button styles */
+  .go-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: block;
+    margin: 20px auto;
+  }
+  
+  .go-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Exercise list styles */
+  .exercise-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .exercise-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .exercise-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .exercise-item h4 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .exercise-image {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .exercise-image img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  /* Exercise link styles */
+  .exercise-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+  
+  .exercise-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Exercise GIF section */
+  .exercise-gif {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .exercise-gif iframe {
+    border-radius: 8px;
+  }
+  

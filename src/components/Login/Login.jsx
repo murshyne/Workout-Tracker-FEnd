@@ -59,7 +59,10 @@ const Login = () => {
   return (
     <div className="login-page">
       <h2>Welcome to ReppUp!</h2>
-      <p>Your path to success starts here</p><br /><br />
+      <p>RepPup is your all-in-one fitness companion <br /> that helps you stay on track with your health and <br />wellness journey. 
+      Whether you're a beginner or <br />an experienced fitness enthusiast, <br />RepPup offers personalized workout recommendations, <br /> interactive meal planning, <br /> and goal tracking features to ensure you achieve <br />your fitness aspirations</p>
+      <p><strong>Your path to success starts here</strong></p><br /><br />
+      
       <h3>Login to your account</h3>
 
       <form onSubmit={handleSubmit} autoComplete="off">
